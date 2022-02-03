@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import Timer from "./components/Timer";
+import Info from "./components/Info";
 
 function App() {
+    const [startTimer, setStartTimer] = useState(false)
+    const [isRefresh, setIsRefresh] = useState(false)
+    const [circleInd, setCircleInd] = useState(false)
+    const [currCircle , setCurrCircle] = useState([])
+
+
+    const startAndStop = () => {
+        setStartTimer(!startTimer)
+    }
+    const refresh = () => {
+        setIsRefresh(true)
+    }
+    const createCircle = () => {
+        setCircleInd(!circleInd)
+    }
+    const addCircle = (curr) => {
+        setCurrCircle([...currCircle , curr])
+    }
+
+    console.log(currCircle)
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Timer
+            start={startTimer}
+            refresh={isRefresh}
+            setRefresh={setIsRefresh}
+            setStart={setStartTimer}
+            circle={circleInd}
+            setCircle={setCircleInd}
+            addCircle={addCircle}/>
+
+        <button onClick={startAndStop}>START</button>
+        <button onClick={refresh}>REFRESH</button>
+        <button onClick={createCircle}>Do circle</button>
+        <div>
+            <Info criclesData={currCircle}/>
+        </div>
     </div>
   );
 }
